@@ -145,18 +145,11 @@ class MAIN:
         self.taipan.reset()
 
     def grass_background(self):
-        grass_color = (167,209,61)
         for row in range(cell_number):
-            if row % 2 == 0:
-                for col in range(cell_number):
-                    if col % 2 == 0:
-                        grass_rect = pygame.Rect(col * cell_size, row * cell_size, cell_size, cell_size)
-                        pygame.draw.rect(screen, grass_color, grass_rect)
-            else:
-                for col in range(cell_number):
-                    if col % 2 != 0:
-                        grass_rect = pygame.Rect(col * cell_size, row * cell_size, cell_size, cell_size)
-                        pygame.draw.rect(screen, grass_color, grass_rect)
+            for col in range(cell_number):
+                grass_rect = pygame.Rect(col * cell_size, row * cell_size, cell_size, cell_size)
+                screen.blit(track, grass_rect)
+            
 
     def score(self):
         score_text = str(len(self.taipan.body) - 3)
@@ -181,6 +174,7 @@ cell_number = 20
 screen = pygame.display.set_mode((800, 800), pygame.RESIZABLE)
 clock = pygame.time.Clock()
 passenger = pygame.image.load('Passengers/passenger.png').convert_alpha()
+track = pygame.image.load('track.png').convert_alpha()
 game_font = pygame.font.Font('Pixeled.ttf', 25)
 
 SCREEN_UPDATE = pygame.USEREVENT
@@ -210,7 +204,6 @@ while True:
                     main_game.taipan.direction = Vector2(-1,0)
 
 
-    screen.fill((175,215,70))
     main_game.draw_elements()
     pygame.display.update()
     clock.tick(60)
