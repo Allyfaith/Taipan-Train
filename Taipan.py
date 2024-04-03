@@ -2,6 +2,8 @@ import pygame,sys,random
 from pygame.math import Vector2
 from button import Button
 from pygame.locals import *
+from Titanoboa import SteamGame
+from BlackMamba import BulletGame
 
 
 class TAIPAN:
@@ -311,6 +313,57 @@ def TaipanGame():
         pygame.display.update()
         clock.tick(60)
 
+def difficulty_select():
+    while True:
+        DIFFICULTY_SELECT_MOUSE_POS = pygame.mouse.get_pos()
+
+        SCREEN.fill("Gray")
+
+        DIFFICULTY_SELECT_TEXT = get_font(45).render("SELECT DIFFICULTY", True, "Black")
+        DIFFICULTY_SELECT_RECT = DIFFICULTY_SELECT_TEXT.get_rect(center=(400, 100))
+        SCREEN.blit(DIFFICULTY_SELECT_TEXT, DIFFICULTY_SELECT_RECT)
+
+        DIFFICULTY_SELECT_BACK = Button(image=None, pos=(400, 750), 
+                            text_input="BACK", font=get_font(35), base_color="Black", hovering_color="Green")
+
+        DIFFICULTY_SELECT_BACK.changeColor(DIFFICULTY_SELECT_MOUSE_POS)
+        DIFFICULTY_SELECT_BACK.update(SCREEN)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if DIFFICULTY_SELECT_BACK.checkForInput(DIFFICULTY_SELECT_MOUSE_POS):
+                    main_menu()
+        TAIPAN_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(400, 250), 
+                            text_input="TAIPAN", font=get_font(60), base_color="#d7fcd4", hovering_color="White")
+        STEAM_BUTTON = Button(image=pygame.image.load("assets/Options Rect.png"), pos=(400, 400), 
+                            text_input="STEAM", font=get_font(60), base_color="#d7fcd4", hovering_color="White")
+        BULLET_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(400, 550), 
+                            text_input="BULLET", font=get_font(60), base_color="#d7fcd4", hovering_color="White")
+
+        SCREEN.blit(DIFFICULTY_SELECT_TEXT, DIFFICULTY_SELECT_RECT)
+
+        for button in [TAIPAN_BUTTON, STEAM_BUTTON, BULLET_BUTTON]:
+            button.changeColor(DIFFICULTY_SELECT_MOUSE_POS)
+            button.update(SCREEN)
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if TAIPAN_BUTTON.checkForInput(DIFFICULTY_SELECT_MOUSE_POS):
+                    pygame.mixer.music.fadeout(1000)
+                    TaipanGame()
+                if STEAM_BUTTON.checkForInput(DIFFICULTY_SELECT_MOUSE_POS):
+                    pygame.mixer.music.fadeout(1000)
+                    SteamGame()
+                if BULLET_BUTTON.checkForInput(DIFFICULTY_SELECT_MOUSE_POS):
+                    pygame.mixer.music.fadeout(1000)
+                    BulletGame()
+        pygame.display.update()
 def options():
     while True:
         OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
@@ -371,7 +424,7 @@ def main_menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
                     pygame.mixer.music.fadeout(1000)
-                    TaipanGame()
+                    difficulty_select()
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
                     options()
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
