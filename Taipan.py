@@ -183,7 +183,7 @@ class MAIN:
             screen.blit(game_over_text,(35,-27))
             screen.blit(game_score_text,(240,175))
             screen.blit(play_again_text,(25,340))
-            screen.blit(back_button_text,(75, 600))
+            screen.blit(back_button_text,(29.5, 600))
 
             self.taipan.reset()
 

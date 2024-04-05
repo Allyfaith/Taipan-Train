@@ -166,24 +166,23 @@ class MAIN:
         pygame.draw.rect(screen, (56,74,12), bg_rect, 2)
 
     def game_over(self):
-
+        score_text_2 = str(len(self.steam.body)-3)
         sample = pygame.mixer.music.load('GameOverMusic.wav')
         pygame.mixer.music.play(-1, 0.0)
         pygame.mixer.music.set_volume(0.5)
 
         while True:
-            game_over_text = game_font.render("GAME OVER", True, (200,200,200))
-            game_score_text = game_font.render(f"SCORE: {str(len(self.steam.body) - 3)}", True, (200,200,200))
+            game_over_text = game_over_font.render("GAME OVER", True, (200,200,200))
+            game_score_text = game_score_font.render(f"SCORE: {score_text_2}", True, (200,200,200))
+            play_again_text = play_again_font.render("CLICK ON SCREEN TO PLAY AGAIN", True, (200,200,200))
+            back_button_text = back_button_font.render("PRESS [M] TO GO BACK TO THE MAIN MENU", True, (200,200,200))
+            screen.fill((0,100,36))
+            screen.blit(game_over_text,(35,-27))
+            screen.blit(game_score_text,(240,175))
+            screen.blit(play_again_text,(25,340))
+            screen.blit(back_button_text,(29.5, 600))
 
-            screen.fill((0,0,0))
-            screen.blit(game_over_text, (200,400))
-            screen.blit(game_score_text, (200,600))
-
-            #for character in TaipanGame():
-                #character.kill()
             self.steam.reset()
-                #pygame.display.update()
-                #time.sleep(5)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -191,9 +190,7 @@ class MAIN:
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pygame.mixer.music.stop()
-                    pygame.quit()
-                    sys.exit()
-                #SteamGame()
+                    SteamGame()
 
             pygame.display.update()
         
@@ -209,7 +206,10 @@ clock = pygame.time.Clock()
 passenger = pygame.image.load('Passengers/passengerS.png').convert_alpha()
 track = pygame.image.load('track.png').convert_alpha()
 game_font = pygame.font.Font('Pixeled.ttf', 25)
-
+game_over_font = pygame.font.Font('Pixeled.ttf', 84)
+game_score_font = pygame.font.Font('Pixeled.ttf', 44)
+play_again_font = pygame.font.Font('Pixeled.ttf', 30)
+back_button_font = pygame.font.Font('Pixeled.ttf', 23)
 SCREEN_UPDATE = pygame.USEREVENT
 pygame.time.set_timer(SCREEN_UPDATE, 150)
 
@@ -217,9 +217,9 @@ main_game = MAIN()
 
 def SteamGame():
 
-   # sample = pygame.mixer.music.load('SampleMusic.wav')
-   # pygame.mixer.music.play(-1, 0.0)
-   # pygame.mixer.music.set_volume(0.3)
+    sample = pygame.mixer.music.load('SampleMusic.wav')
+    pygame.mixer.music.play(-1, 0.0)
+    pygame.mixer.music.set_volume(0.3)
 
     while True:
         GAME_MOUSE_POS = pygame.mouse.get_pos()
