@@ -1,0 +1,11 @@
+MainMenuMusic: Rainy Village - 8 Bit Lofi Hip Hop by TadOnMusic
+
+DifficultySelectMusic: Cipher by Kevin Macleod
+
+TaipanMusic: Your Love is What I Need by Soundroll
+
+SteamMusic: Floating Also by William Rosati
+
+BulletMusic: Robot City by Quincas Moreira
+
+GameOverMusic: Floating Cat by Michael Grubb
