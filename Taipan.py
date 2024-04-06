@@ -2,8 +2,7 @@ import pygame,sys,random
 from pygame.math import Vector2
 from button import Button
 from pygame.locals import *
-from Titanoboa import SteamGame
-from BlackMamba import BulletGame
+
 
 
 class TAIPAN:
@@ -390,6 +389,499 @@ def options():
 
         pygame.display.update()
 
+
+class BULLET:
+    def __init__(self):
+        self.bodyBM = [Vector2(5,10),Vector2(4,10),Vector2(3,10)]
+        self.directionBM = Vector2(1,0)
+        self.new_cartBM = False
+
+        self.head_upBM = pygame.image.load('Bullet/head_up.png').convert_alpha()
+        self.head_downBM = pygame.image.load('Bullet/head_down.png').convert_alpha()
+        self.head_rightBM = pygame.image.load('Bullet/head_right.png').convert_alpha()
+        self.head_leftBM = pygame.image.load('Bullet/head_left.png').convert_alpha()
+		
+        self.tail_upBM = pygame.image.load('Bullet/tail_up.png').convert_alpha()
+        self.tail_downBM = pygame.image.load('Bullet/tail_down.png').convert_alpha()
+        self.tail_rightBM = pygame.image.load('Bullet/tail_right.png').convert_alpha()
+        self.tail_leftBM = pygame.image.load('Bullet/tail_left.png').convert_alpha()
+
+        self.body_verticalBM = pygame.image.load('Bullet/body_vertical.png').convert_alpha()
+        self.body_horizontalBM = pygame.image.load('Bullet/body_horizontal.png').convert_alpha()
+
+        self.body_trBM = pygame.image.load('Bullet/body_tr.png').convert_alpha()
+        self.body_tlBM = pygame.image.load('Bullet/body_tl.png').convert_alpha()
+        self.body_brBM = pygame.image.load('Bullet/body_br.png').convert_alpha()
+        self.body_blBM = pygame.image.load('Bullet/body_bl.png').convert_alpha()
+
+        self.train_soundBM = pygame.mixer.Sound('horn.wav')
+        self.train_soundBM.set_volume(0.7)
+
+    def draw_bullet(self):
+        self.update_head_graphicsBM()
+        self.update_tail_graphicsBM()
+
+        for indexBM,cartBM in enumerate(self.bodyBM):
+            x_posBM = int(cartBM.x * cell_sizeBM)
+            y_posBM = int(cartBM.y * cell_sizeBM)
+            cart_rectBM = pygame.Rect(x_posBM, y_posBM, cell_sizeBM, cell_sizeBM)
+
+            if indexBM == 0:
+                screenBM.blit(self.headBM, cart_rectBM)
+            elif indexBM == len(self.bodyBM) - 1:
+                screenBM.blit(self.tailBM, cart_rectBM)
+            else:
+                previous_cartBM = self.bodyBM[indexBM + 1] - cartBM
+                next_cartBM = self.bodyBM[indexBM - 1] - cartBM
+                if previous_cartBM.x == next_cartBM.x:
+                    screenBM.blit(self.body_verticalBM,cart_rectBM)
+                elif previous_cartBM.y == next_cartBM.y:
+                    screenBM.blit(self.body_horizontalBM,cart_rectBM)
+                else:
+                    if previous_cartBM.x == -1 and next_cartBM.y == -1 or previous_cartBM.y == -1 and next_cartBM.x == -1: 
+                        screenBM.blit(self.body_tlBM, cart_rectBM)
+                    elif previous_cartBM.x == -1 and next_cartBM.y == 1 or previous_cartBM.y == 1 and next_cartBM.x == -1:
+                        screenBM.blit(self.body_blBM, cart_rectBM)
+                    elif previous_cartBM.x == 1 and next_cartBM.y == -1 or previous_cartBM.y == -1 and next_cartBM.x == 1:
+                        screenBM.blit(self.body_trBM, cart_rectBM)
+                    elif previous_cartBM.x == 1 and next_cartBM.y == 1 or previous_cartBM.y == 1 and next_cartBM.x == 1:
+                        screenBM.blit(self.body_brBM, cart_rectBM)
+
+    def update_head_graphicsBM(self):
+        head_directionBM = self.bodyBM[1] - self.bodyBM[0]
+        if head_directionBM == Vector2(1,0): self.headBM = self.head_leftBM
+        elif head_directionBM == Vector2(-1,0): self.headBM = self.head_rightBM
+        elif head_directionBM == Vector2(0,1): self.headBM = self.head_upBM
+        elif head_directionBM == Vector2(0,-1): self.headBM = self.head_downBM
+
+    def update_tail_graphicsBM(self):
+        tail_directionBM = self.bodyBM[-2] - self.bodyBM[-1]
+        if tail_directionBM == Vector2(1,0): self.tailBM = self.tail_leftBM
+        elif tail_directionBM == Vector2(-1,0): self.tailBM = self.tail_rightBM
+        elif tail_directionBM == Vector2(0,1): self.tailBM = self.tail_upBM
+        elif tail_directionBM == Vector2(0,-1): self.tailBM = self.tail_downBM
+
+    def move_bulletBM(self):
+        if self.new_cartBM == True:
+            body_copyBM = self.bodyBM[:]
+            body_copyBM.insert(0,body_copyBM[0] + self.directionBM)
+            self.bodyBM = body_copyBM[:]
+            self.new_cartBM = False
+        else:
+            body_copyBM = self.bodyBM[:-1]
+            body_copyBM.insert(0,body_copyBM[0] + self.directionBM)
+            self.bodyBM = body_copyBM[:]
+
+    def add_cartBM(self):
+        self.new_cartBM = True     
+
+    def play_train_soundBM(self):
+        self.train_soundBM.play()
+
+    def resetBM(self):
+        self.bodyBM = [Vector2(5,10),Vector2(4,10),Vector2(3,10)]
+        self.directionBM = Vector2(1,0)
+
+class PASSENGERBM:
+    def __init__(self):
+        self.randomizeBM()
+
+    def draw_passengerBM(self):
+        passenger_rectBM = pygame.Rect(int(self.posBM.x * cell_sizeBM),int (self.posBM.y * cell_sizeBM),cell_sizeBM, cell_sizeBM)
+        screenBM.blit(passengerBM, passenger_rectBM)
+
+    def randomizeBM(self):
+        self.xBM = random.randint(0, cell_numberBM - 1)
+        self.yBM = random.randint(0, cell_numberBM - 1)
+        self.posBM = Vector2(self.xBM, self.yBM)
+
+class MAINBM:
+    def __init__(self):
+        self.bullet = BULLET()
+        self.passengerBM = PASSENGERBM()
+
+    def updateBM(self):
+        self.bullet.move_bulletBM()
+        self.collisionBM()
+        self.fail_collisionBM()
+
+    def draw_elementsBM(self):
+        self.grass_backgroundBM()
+        self.passengerBM.draw_passengerBM()
+        self.bullet.draw_bullet()
+        self.scoreBM()
+
+    def collisionBM(self):
+        if self.passengerBM.posBM == self.bullet.bodyBM[0]:
+            self.passengerBM.randomizeBM()
+            self.bullet.add_cartBM()
+            self.bullet.play_train_soundBM()
+
+        for cart in self.bullet.bodyBM[1:]:
+            if cart == self.passengerBM.posBM:
+                self.passengerBM.randomizeBM()
+    
+    def fail_collisionBM(self):
+        if not 0 <= self.bullet.bodyBM[0].x < cell_numberBM or not 0 <= self.bullet.bodyBM[0].y < cell_numberBM:
+            self.game_overBM()
+
+        for cartBM in self.bullet.bodyBM[1:]:
+            if cartBM == self.bullet.bodyBM[0]:
+                self.game_overBM()
+
+
+    def grass_backgroundBM(self):
+        for rowBM in range(cell_numberBM):
+            for colBM in range(cell_numberBM):
+                grass_rectBM = pygame.Rect(colBM * cell_sizeBM, rowBM * cell_sizeBM, cell_sizeBM, cell_sizeBM)
+                screenBM.blit(trackBM, grass_rectBM)
+
+    def scoreBM(self):
+        score_textBM = str(len(self.bullet.bodyBM) - 3)
+        score_surfaceBM = game_fontBM.render(score_textBM, False, (56,74,12))
+        score_xBM = int(cell_sizeBM * cell_numberBM - 60)
+        score_yBM = int(cell_sizeBM * cell_numberBM - 40)
+        score_rectBM = score_surfaceBM.get_rect(center = (score_xBM, score_yBM))
+        passenger_rectBM = passengerBM.get_rect(midright = (score_rectBM.left, score_rectBM.centery))
+        bg_rectBM = pygame.Rect(passenger_rectBM.left - 2, passenger_rectBM.top - 2, passenger_rectBM.width + score_rectBM.width + 6, passenger_rectBM.height + 10)
+
+        pygame.draw.rect(screenBM, (164, 209, 61), bg_rectBM)
+        screenBM.blit(score_surfaceBM, score_rectBM)
+        screenBM.blit(passengerBM, passenger_rectBM)
+        pygame.draw.rect(screenBM, (56,74,12), bg_rectBM, 2)
+
+    def game_overBM(self):
+        score_text_2BM = str(len(self.bullet.bodyBM)-3)
+        sampleBM = pygame.mixer.music.load('GameOverMusic.wav')
+        pygame.mixer.music.play(-1, 0.0)
+        pygame.mixer.music.set_volume(0.5)
+
+        while True:
+            game_over_textBM = game_over_fontBM.render("GAME OVER", True, (200,200,200))
+            game_score_textBM = game_score_fontBM.render(f"SCORE: {score_text_2BM}", True, (200,200,200))
+            play_again_textBM = play_again_fontBM.render("CLICK ON SCREEN TO PLAY AGAIN", True, (200,200,200))
+            back_button_textBM = back_button_fontBM.render("PRESS [M] TO GO BACK TO THE MAIN MENU", True, (200,200,200))
+            screenBM.fill((0,100,36))
+            screenBM.blit(game_over_textBM,(35,-27))
+            screenBM.blit(game_score_textBM,(240,175))
+            screenBM.blit(play_again_textBM,(25,340))
+            screenBM.blit(back_button_textBM,(29.5, 600))
+
+            self.bullet.resetBM()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pygame.mixer.music.stop()
+                    BulletGame()
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_m:
+                        main_menu()
+            pygame.display.update()
+
+
+
+pygame.mixer.pre_init(44100,-16,2,512)
+pygame.init()
+cell_sizeBM = 40
+cell_numberBM = 20
+screenBM = pygame.display.set_mode((cell_numberBM * cell_sizeBM, cell_numberBM * cell_sizeBM),pygame.SCALED|HWSURFACE|DOUBLEBUF|RESIZABLE)
+clockBM = pygame.time.Clock()
+passengerBM = pygame.image.load('Passengers/passengerB.png').convert_alpha()
+trackBM = pygame.image.load('track.png').convert_alpha()
+game_fontBM = pygame.font.Font('Pixeled.ttf', 25)
+game_over_fontBM = pygame.font.Font('Pixeled.ttf', 84)
+game_score_fontBM = pygame.font.Font('Pixeled.ttf', 44)
+play_again_fontBM = pygame.font.Font('Pixeled.ttf', 30)
+back_button_fontBM = pygame.font.Font('Pixeled.ttf', 23)
+SCREEN_UPDATEBM = pygame.USEREVENT
+pygame.time.set_timer(SCREEN_UPDATEBM, 80)
+
+main_gameBM = MAINBM()
+
+def BulletGame():
+
+    sampleBM = pygame.mixer.music.load('SampleMusic.wav')
+    pygame.mixer.music.play(-1, 0.0)
+    pygame.mixer.music.set_volume(0.3)
+
+    while True:
+        GAME_MOUSE_POSBM = pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == SCREEN_UPDATEBM:
+                main_gameBM.updateBM()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    if main_gameBM.bullet.directionBM.y != 1:
+                        main_gameBM.bullet.directionBM = Vector2(0,-1)
+                if event.key == pygame.K_DOWN:
+                    if main_gameBM.bullet.directionBM.y != -1:
+                        main_gameBM.bullet.directionBM = Vector2(0,1)
+                if event.key == pygame.K_RIGHT:
+                    if main_gameBM.bullet.directionBM.x != -1:
+                        main_gameBM.bullet.directionBM = Vector2(1,0)
+                if event.key == pygame.K_LEFT:
+                    if main_gameBM.bullet.directionBM.x != 1:
+                        main_gameBM.bullet.directionBM = Vector2(-1,0)
+
+
+        screenBM.fill((175,215,70))
+        main_gameBM.draw_elementsBM()
+        pygame.display.update()
+        clockBM.tick(60)
+
+class STEAM:
+    def __init__(self):
+        self.bodyT = [Vector2(5,10),Vector2(4,10),Vector2(3,10)]
+        self.directionT = Vector2(1,0)
+        self.new_cartT = False
+
+        self.head_upT = pygame.image.load('Steam/head_up.png').convert_alpha()
+        self.head_downT = pygame.image.load('Steam/head_down.png').convert_alpha()
+        self.head_rightT = pygame.image.load('Steam/head_right.png').convert_alpha()
+        self.head_leftT = pygame.image.load('Steam/head_left.png').convert_alpha()
+		
+        self.tail_upT = pygame.image.load('Steam/tail_up.png').convert_alpha()
+        self.tail_downT = pygame.image.load('Steam/tail_down.png').convert_alpha()
+        self.tail_rightT = pygame.image.load('Steam/tail_right.png').convert_alpha()
+        self.tail_leftT = pygame.image.load('Steam/tail_left.png').convert_alpha()
+
+        self.body_verticalT = pygame.image.load('Steam/body_vertical.png').convert_alpha()
+        self.body_horizontalT = pygame.image.load('Steam/body_horizontal.png').convert_alpha()
+
+        self.body_trT = pygame.image.load('Steam/body_tr.png').convert_alpha()
+        self.body_tlT = pygame.image.load('Steam/body_tl.png').convert_alpha()
+        self.body_brT = pygame.image.load('Steam/body_br.png').convert_alpha()
+        self.body_blT = pygame.image.load('Steam/body_bl.png').convert_alpha()
+
+        self.train_soundT = pygame.mixer.Sound('horn.wav')
+        self.train_soundT.set_volume(0.7)
+
+    def draw_steam(self):
+        self.update_head_graphicsT()
+        self.update_tail_graphicsT()
+
+        for indexT,cartT in enumerate(self.bodyT):
+            x_posT = int(cartT.x * cell_sizeT)
+            y_posT = int(cartT.y * cell_sizeT)
+            cart_rectT = pygame.Rect(x_posT, y_posT, cell_sizeT, cell_sizeT)
+
+            if indexT == 0:
+                screenT.blit(self.headT, cart_rectT)
+            elif indexT == len(self.bodyT) - 1:
+                screenT.blit(self.tailT, cart_rectT)
+            else:
+                previous_cartT = self.bodyT[indexT + 1] - cartT
+                next_cartT = self.bodyT[indexT - 1] - cartT
+                if previous_cartT.x == next_cartT.x:
+                    screenT.blit(self.body_verticalT,cart_rectT)
+                elif previous_cartT.y == next_cartT.y:
+                    screenT.blit(self.body_horizontalT,cart_rectT)
+                else:
+                    if previous_cartT.x == -1 and next_cartT.y == -1 or previous_cartT.y == -1 and next_cartT.x == -1: 
+                        screenT.blit(self.body_tlT, cart_rectT)
+                    elif previous_cartT.x == -1 and next_cartT.y == 1 or previous_cartT.y == 1 and next_cartT.x == -1:
+                        screenT.blit(self.body_blT, cart_rectT)
+                    elif previous_cartT.x == 1 and next_cartT.y == -1 or previous_cartT.y == -1 and next_cartT.x == 1:
+                        screenT.blit(self.body_trT, cart_rectT)
+                    elif previous_cartT.x == 1 and next_cartT.y == 1 or previous_cartT.y == 1 and next_cartT.x == 1:
+                        screenT.blit(self.body_brT, cart_rectT)
+
+    def update_head_graphicsT(self):
+        head_directionT = self.bodyT[1] - self.bodyT[0]
+        if head_directionT == Vector2(1,0): self.headT = self.head_leftT
+        elif head_directionT == Vector2(-1,0): self.headT = self.head_rightT
+        elif head_directionT == Vector2(0,1): self.headT = self.head_upT
+        elif head_directionT == Vector2(0,-1): self.headT = self.head_downT
+
+    def update_tail_graphicsT(self):
+        tail_directionT = self.bodyT[-2] - self.bodyT[-1]
+        if tail_directionT == Vector2(1,0): self.tailT = self.tail_leftT
+        elif tail_directionT == Vector2(-1,0): self.tailT = self.tail_rightT
+        elif tail_directionT == Vector2(0,1): self.tailT = self.tail_upT
+        elif tail_directionT == Vector2(0,-1): self.tailT = self.tail_downT
+
+    def move_steam(self):
+        if self.new_cartT == True:
+            body_copyT = self.bodyT[:]
+            body_copyT.insert(0,body_copyT[0] + self.directionT)
+            self.bodyT = body_copyT[:]
+            self.new_cartT = False
+        else:
+            body_copyT = self.bodyT[:-1]
+            body_copyT.insert(0,body_copyT[0] + self.directionT)
+            self.bodyT = body_copyT[:]
+
+    def add_cartT(self):
+        self.new_cartT = True     
+
+    def play_train_soundT(self):
+        self.train_soundT.play()
+
+    def resetT(self):
+        self.bodyT = [Vector2(5,10),Vector2(4,10),Vector2(3,10)]
+        self.directionT = Vector2(1,0)
+
+class PASSENGERT:
+    def __init__(self):
+        self.randomizeT()
+
+    def draw_passengerT(self):
+        passenger_rect = pygame.Rect(int(self.posT.x * cell_sizeT),int (self.posT.y * cell_sizeT),cell_sizeT, cell_sizeT)
+        screenT.blit(passengerT, passenger_rect)
+
+    def randomizeT(self):
+        self.xT = random.randint(0, cell_numberT - 1)
+        self.yT = random.randint(0, cell_numberT - 1)
+        self.posT = Vector2(self.xT, self.yT)
+
+class MAIN:
+    def __init__(self):
+        self.steam = STEAM()
+        self.passengerT = PASSENGERT()
+
+    def updateT(self):
+        self.steam.move_steam()
+        self.collisionT()
+        self.fail_collisionT()
+
+    def draw_elementsT(self):
+        self.grass_backgroundT()
+        self.passengerT.draw_passengerT()
+        self.steam.draw_steam()
+        self.scoreT()
+
+    def collisionT(self):
+        if self.passengerT.posT == self.steam.bodyT[0]:
+            self.passengerT.randomizeT()
+            self.steam.add_cartT()
+            self.steam.play_train_soundT()
+
+        for cartT in self.steam.bodyT[1:]:
+            if cartT == self.passengerT.posT:
+                self.passengerT.randomizeT()
+    
+    def fail_collisionT(self):
+        if not 0 <= self.steam.bodyT[0].x < cell_numberT or not 0 <= self.steam.bodyT[0].y < cell_numberT:
+            pygame.mixer.music.stop()
+            self.game_overT()
+
+        for cartT in self.steam.bodyT[1:]:
+            if cartT == self.steam.bodyT[0]:
+                pygame.mixer.music.stop()
+                self.game_overT()
+
+    def grass_backgroundT(self):
+        for rowT in range(cell_numberT):
+            for colT in range(cell_numberT):
+                grass_rect = pygame.Rect(colT * cell_sizeT, rowT * cell_sizeT, cell_sizeT, cell_sizeT)
+                screenT.blit(trackT, grass_rect)
+
+    def scoreT(self):
+        score_textT = str(len(self.steam.bodyT) - 3)
+        score_surfaceT = game_fontT.render(score_textT, False, (56,74,12))
+        score_xT = int(cell_sizeT * cell_numberT - 60)
+        score_yT = int(cell_sizeT * cell_numberT - 40)
+        score_rectT = score_surfaceT.get_rect(center = (score_xT, score_yT))
+        passenger_rectT = passengerT.get_rect(midright = (score_rectT.left, score_rectT.centery))
+        bg_rectT = pygame.Rect(passenger_rectT.left - 2, passenger_rectT.top - 2, passenger_rectT.width + score_rectT.width + 6, passenger_rectT.height + 10)
+
+        pygame.draw.rect(screenT, (164, 209, 61), bg_rectT)
+        screenT.blit(score_surfaceT, score_rectT)
+        screenT.blit(passengerT, passenger_rectT)
+        pygame.draw.rect(screenT, (56,74,12), bg_rectT, 2)
+
+    def game_overT(self):
+        score_text_2T = str(len(self.steam.bodyT)-3)
+        sampleT = pygame.mixer.music.load('GameOverMusic.wav')
+        pygame.mixer.music.play(-1, 0.0)
+        pygame.mixer.music.set_volume(0.5)
+
+        while True:
+            game_over_textT = game_over_fontT.render("GAME OVER", True, (200,200,200))
+            game_score_textT = game_score_fontT.render(f"SCORE: {score_text_2T}", True, (200,200,200))
+            play_again_textT = play_again_fontT.render("CLICK ON SCREEN TO PLAY AGAIN", True, (200,200,200))
+            back_button_textT = back_button_fontT.render("PRESS [M] TO GO BACK TO THE MAIN MENU", True, (200,200,200))
+            screenT.fill((0,100,36))
+            screenT.blit(game_over_textT,(35,-27))
+            screenT.blit(game_score_textT,(240,175))
+            screenT.blit(play_again_textT,(25,340))
+            screenT.blit(back_button_textT,(29.5, 600))
+
+            self.steam.resetT()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pygame.mixer.music.stop()
+                    SteamGame()
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_m:
+                        main_menu()
+            pygame.display.update()
+        
+
+
+
+pygame.mixer.pre_init(44100,-16,2,512)
+pygame.init()
+cell_sizeT = 40
+cell_numberT = 20
+screenT = pygame.display.set_mode((cell_numberT * cell_sizeT, cell_numberT * cell_sizeT),pygame.SCALED|HWSURFACE|DOUBLEBUF|RESIZABLE)
+clockT = pygame.time.Clock()
+passengerT = pygame.image.load('Passengers/passengerS.png').convert_alpha()
+trackT = pygame.image.load('track.png').convert_alpha()
+game_fontT = pygame.font.Font('Pixeled.ttf', 25)
+game_over_fontT = pygame.font.Font('Pixeled.ttf', 84)
+game_score_fontT = pygame.font.Font('Pixeled.ttf', 44)
+play_again_fontT = pygame.font.Font('Pixeled.ttf', 30)
+back_button_fontT = pygame.font.Font('Pixeled.ttf', 23)
+SCREEN_UPDATET = pygame.USEREVENT
+pygame.time.set_timer(SCREEN_UPDATET, 150)
+
+main_gameT = MAIN()
+
+def SteamGame():
+
+    sampleT = pygame.mixer.music.load('SampleMusic.wav')
+    pygame.mixer.music.play(-1, 0.0)
+    pygame.mixer.music.set_volume(0.3)
+
+    while True:
+        GAME_MOUSE_POST = pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == SCREEN_UPDATET:
+                main_gameT.updateT()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    if main_gameT.steam.directionT.y != 1:
+                        main_gameT.steam.directionT = Vector2(0,-1)
+                if event.key == pygame.K_DOWN:
+                    if main_gameT.steam.directionT.y != -1:
+                        main_gameT.steam.directionT = Vector2(0,1)
+                if event.key == pygame.K_RIGHT:
+                    if main_gameT.steam.directionT.x != -1:
+                        main_gameT.steam.directionT = Vector2(1,0)
+                if event.key == pygame.K_LEFT:
+                    if main_gameT.steam.directionT.x != 1:
+                        main_gameT.steam.directionT = Vector2(-1,0)
+
+
+        screenT.fill((175,215,70))
+        main_gameT.draw_elementsT()
+        pygame.display.update()
+        clockT.tick(60)
+
 def main_menu():
 
     music = pygame.mixer.music.load('MenuMusic.wav')
@@ -434,6 +926,3 @@ def main_menu():
         pygame.display.update()
 
 main_menu()
-
-
-
