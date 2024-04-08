@@ -148,10 +148,8 @@ class MAIN:
                 self.game_over()
 
     def grass_background(self):
-        for row in range(cell_number):
-            for col in range(cell_number):
-                grass_rect = pygame.Rect(col * cell_size, row * cell_size, cell_size, cell_size)
-                screen.blit(track, grass_rect)            
+        NewTracks = pygame.image.load('TaipanTracks.png').convert()
+        screen.blit(NewTracks, (0,0))         
 
     def score(self):
         score_text = str(len(self.taipan.body) - 3)
@@ -253,7 +251,7 @@ cell_number = 20
 screen = pygame.display.set_mode((cell_number * cell_size, cell_number * cell_size),pygame.SCALED|HWSURFACE|DOUBLEBUF|RESIZABLE)
 clock = pygame.time.Clock()
 passenger = pygame.image.load('Passengers/passengerT.png').convert_alpha()
-track = pygame.image.load('track.png').convert_alpha()
+track = pygame.image.load('TaipanTracks.png').convert_alpha()
 game_font = pygame.font.Font('Pixeled.ttf', 25)
 game_over_font = pygame.font.Font('Pixeled.ttf', 84)
 game_score_font = pygame.font.Font('Pixeled.ttf', 44)
@@ -341,7 +339,7 @@ def difficulty_select():
                     main_menu()
         TAIPAN_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(400, 250), 
                             text_input="TAIPAN", font=get_font(60), base_color="#d7fcd4", hovering_color="White")
-        STEAM_BUTTON = Button(image=pygame.image.load("assets/Options Rect.png"), pos=(400, 400), 
+        STEAM_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(400, 400), 
                             text_input="STEAM", font=get_font(60), base_color="#d7fcd4", hovering_color="White")
         BULLET_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(400, 550), 
                             text_input="BULLET", font=get_font(60), base_color="#d7fcd4", hovering_color="White")
@@ -535,10 +533,8 @@ class MAINBM:
 
 
     def grass_backgroundBM(self):
-        for rowBM in range(cell_numberBM):
-            for colBM in range(cell_numberBM):
-                grass_rectBM = pygame.Rect(colBM * cell_sizeBM, rowBM * cell_sizeBM, cell_sizeBM, cell_sizeBM)
-                screenBM.blit(trackBM, grass_rectBM)
+       NewTracksBM = pygame.image.load('BulletTracks.png').convert()
+       screen.blit(NewTracksBM, (0,0))
 
     def scoreBM(self):
         score_textBM = str(len(self.bullet.bodyBM) - 3)
@@ -594,7 +590,7 @@ cell_numberBM = 20
 screenBM = pygame.display.set_mode((cell_numberBM * cell_sizeBM, cell_numberBM * cell_sizeBM),pygame.SCALED|HWSURFACE|DOUBLEBUF|RESIZABLE)
 clockBM = pygame.time.Clock()
 passengerBM = pygame.image.load('Passengers/passengerB.png').convert_alpha()
-trackBM = pygame.image.load('track.png').convert_alpha()
+trackBM = pygame.image.load('BulletTracks.png').convert_alpha()
 game_fontBM = pygame.font.Font('Pixeled.ttf', 25)
 game_over_fontBM = pygame.font.Font('Pixeled.ttf', 84)
 game_score_fontBM = pygame.font.Font('Pixeled.ttf', 44)
@@ -781,10 +777,8 @@ class MAIN:
                 self.game_overT()
 
     def grass_backgroundT(self):
-        for rowT in range(cell_numberT):
-            for colT in range(cell_numberT):
-                grass_rect = pygame.Rect(colT * cell_sizeT, rowT * cell_sizeT, cell_sizeT, cell_sizeT)
-                screenT.blit(trackT, grass_rect)
+        NewTracksT = pygame.image.load('SteamTracks.png').convert()
+        screen.blit(NewTracksT, (0,0))
 
     def scoreT(self):
         score_textT = str(len(self.steam.bodyT) - 3)
@@ -841,7 +835,7 @@ cell_numberT = 20
 screenT = pygame.display.set_mode((cell_numberT * cell_sizeT, cell_numberT * cell_sizeT),pygame.SCALED|HWSURFACE|DOUBLEBUF|RESIZABLE)
 clockT = pygame.time.Clock()
 passengerT = pygame.image.load('Passengers/passengerS.png').convert_alpha()
-trackT = pygame.image.load('track.png').convert_alpha()
+trackT = pygame.image.load('SteamTracks.png').convert_alpha()
 game_fontT = pygame.font.Font('Pixeled.ttf', 25)
 game_over_fontT = pygame.font.Font('Pixeled.ttf', 84)
 game_score_fontT = pygame.font.Font('Pixeled.ttf', 44)
