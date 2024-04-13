@@ -167,6 +167,7 @@ class MAIN:
         
     def game_over(self):
         score_text_2 = str(len(self.taipan.body)-3)
+        Game_over_image = pygame.image.load('GameOver.png').convert()
         sample = pygame.mixer.music.load('GameOverMusic.wav')
         pygame.mixer.music.play(-1, 0.0)
         pygame.mixer.music.set_volume(0.5)
@@ -175,13 +176,14 @@ class MAIN:
             game_over_text = game_over_font.render("GAME OVER", True, (200,200,200))
             game_score_text = game_score_font.render(f"SCORE: {score_text_2}", True, (200,200,200))
             play_again_text = play_again_font.render("CLICK ON SCREEN TO PLAY AGAIN", True, (200,200,200))
-            back_button_text = back_button_font.render("PRESS [M] TO GO BACK TO THE MAIN MENU", True, (200,200,200))
-            screen.fill((0,100,36))
+            back_button_text = back_button_font.render("PRESS [M] FOR MAIN MENU", True, (200,200,200))
+            back_button_2Text = back_button_fontBM.render("PRESS [D] TO CHANGE DIFFICULTY", True, (200,200,200))
+            screen.blit(Game_over_image,(0,0))
             screen.blit(game_over_text,(35,-27))
             screen.blit(game_score_text,(240,175))
             screen.blit(play_again_text,(25,340))
-            screen.blit(back_button_text,(29.5, 600))
-
+            screen.blit(back_button_text,(135, 600))
+            screen.blit(back_button_2Text,(135, 700))
             self.taipan.reset()
 
             for event in pygame.event.get():
@@ -194,6 +196,9 @@ class MAIN:
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_m:
                         main_menu()
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_d:
+                        difficulty_select()
 
             pygame.display.update()
         
@@ -337,12 +342,12 @@ def difficulty_select():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if DIFFICULTY_SELECT_BACK.checkForInput(DIFFICULTY_SELECT_MOUSE_POS):
                     main_menu()
-        TAIPAN_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(400, 250), 
-                            text_input="TAIPAN", font=get_font(60), base_color="#d7fcd4", hovering_color="White")
-        STEAM_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(400, 400), 
-                            text_input="STEAM", font=get_font(60), base_color="#d7fcd4", hovering_color="White")
-        BULLET_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(400, 550), 
-                            text_input="BULLET", font=get_font(60), base_color="#d7fcd4", hovering_color="White")
+        TAIPAN_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(200, 250), 
+                            text_input="TAIPAN", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
+        STEAM_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(200, 400), 
+                            text_input="STEAM", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
+        BULLET_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(200, 550), 
+                            text_input="BULLET", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
 
         SCREEN.blit(DIFFICULTY_SELECT_TEXT, DIFFICULTY_SELECT_RECT)
 
@@ -551,6 +556,7 @@ class MAINBM:
         pygame.draw.rect(screenBM, (56,74,12), bg_rectBM, 2)
 
     def game_overBM(self):
+        Game_over_imageBM = pygame.image.load('GameOver.png').convert()
         score_text_2BM = str(len(self.bullet.bodyBM)-3)
         sampleBM = pygame.mixer.music.load('GameOverMusic.wav')
         pygame.mixer.music.play(-1, 0.0)
@@ -560,12 +566,14 @@ class MAINBM:
             game_over_textBM = game_over_fontBM.render("GAME OVER", True, (200,200,200))
             game_score_textBM = game_score_fontBM.render(f"SCORE: {score_text_2BM}", True, (200,200,200))
             play_again_textBM = play_again_fontBM.render("CLICK ON SCREEN TO PLAY AGAIN", True, (200,200,200))
-            back_button_textBM = back_button_fontBM.render("PRESS [M] TO GO BACK TO THE MAIN MENU", True, (200,200,200))
-            screenBM.fill((0,100,36))
+            back_button_textBM = back_button_fontBM.render("PRESS [M] FOR MAIN MENU", True, (200,200,200))
+            back_button_2TextBM = back_button_fontBM.render("PRESS [D] TO CHANGE DIFFICULTY", True, (200,200,200))
+            screen.blit(Game_over_imageBM,(0,0))
             screenBM.blit(game_over_textBM,(35,-27))
             screenBM.blit(game_score_textBM,(240,175))
             screenBM.blit(play_again_textBM,(25,340))
-            screenBM.blit(back_button_textBM,(29.5, 600))
+            screenBM.blit(back_button_textBM,(135, 600))
+            screenBM.blit(back_button_2TextBM,(135, 700))
 
             self.bullet.resetBM()
 
@@ -579,6 +587,9 @@ class MAINBM:
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_m:
                         main_menu()
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_d:
+                        difficulty_select()
             pygame.display.update()
 
 
@@ -796,6 +807,7 @@ class MAIN:
 
     def game_overT(self):
         score_text_2T = str(len(self.steam.bodyT)-3)
+        Game_over_imageT = pygame.image.load('GameOver.png').convert()
         sampleT = pygame.mixer.music.load('GameOverMusic.wav')
         pygame.mixer.music.play(-1, 0.0)
         pygame.mixer.music.set_volume(0.5)
@@ -804,12 +816,14 @@ class MAIN:
             game_over_textT = game_over_fontT.render("GAME OVER", True, (200,200,200))
             game_score_textT = game_score_fontT.render(f"SCORE: {score_text_2T}", True, (200,200,200))
             play_again_textT = play_again_fontT.render("CLICK ON SCREEN TO PLAY AGAIN", True, (200,200,200))
-            back_button_textT = back_button_fontT.render("PRESS [M] TO GO BACK TO THE MAIN MENU", True, (200,200,200))
-            screenT.fill((0,100,36))
+            back_button_textT = back_button_fontT.render("PRESS [M] FOR MAIN MENU", True, (200,200,200))
+            back_button_text2T = back_button_fontT.render("PRESS [D] TO CHANGE DIFFICULTY", True, (200,200,200))
+            screen.blit(Game_over_imageT,(0,0))
             screenT.blit(game_over_textT,(35,-27))
             screenT.blit(game_score_textT,(240,175))
             screenT.blit(play_again_textT,(25,340))
-            screenT.blit(back_button_textT,(29.5, 600))
+            screenT.blit(back_button_textT,(135, 600))
+            screenT.blit(back_button_text2T,(135, 700))
 
             self.steam.resetT()
 
@@ -823,6 +837,9 @@ class MAIN:
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_m:
                         main_menu()
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_d:
+                        difficulty_select()
             pygame.display.update()
         
 
