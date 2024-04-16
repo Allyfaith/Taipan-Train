@@ -262,9 +262,7 @@ game_over_font = pygame.font.Font('Pixeled.ttf', 84)
 game_score_font = pygame.font.Font('Pixeled.ttf', 44)
 play_again_font = pygame.font.Font('Pixeled.ttf', 30)
 back_button_font = pygame.font.Font('Pixeled.ttf', 23)
-
 SCREEN_UPDATE = pygame.USEREVENT
-pygame.time.set_timer(SCREEN_UPDATE, 125)
 SCREEN = pygame.display.set_mode((cell_number * cell_size, cell_number * cell_size),pygame.SCALED|HWSURFACE|DOUBLEBUF|RESIZABLE)
 pygame.display.set_caption("Menu")
 
@@ -278,6 +276,7 @@ main_game = MAIN()
 
 
 def TaipanGame():
+    pygame.time.set_timer(SCREEN_UPDATE, 125) 
 
     TaipanBGM = pygame.mixer.music.load('TaipanMusic.wav')
     pygame.mixer.music.play(-1, 0.0)
@@ -315,86 +314,6 @@ def TaipanGame():
         pygame.display.update()
         clock.tick(60)
 
-def difficulty_select():
-    Difficulty_music = pygame.mixer.music.load('DifficultySelectMusic.wav')
-    pygame.mixer.music.play(-1, 0.0)
-    pygame.mixer.music.set_volume(0.4)
-    while True:
-        
-        DIFFICULTY_SELECT_MOUSE_POS = pygame.mouse.get_pos()
-
-        SCREEN.fill("Gray")
-
-        DIFFICULTY_SELECT_TEXT = get_font(45).render("SELECT DIFFICULTY", True, "Black")
-        DIFFICULTY_SELECT_RECT = DIFFICULTY_SELECT_TEXT.get_rect(center=(400, 100))
-        SCREEN.blit(DIFFICULTY_SELECT_TEXT, DIFFICULTY_SELECT_RECT)
-
-        DIFFICULTY_SELECT_BACK = Button(image=None, pos=(400, 750), 
-                            text_input="BACK", font=get_font(35), base_color="Black", hovering_color="Green")
-
-        DIFFICULTY_SELECT_BACK.changeColor(DIFFICULTY_SELECT_MOUSE_POS)
-        DIFFICULTY_SELECT_BACK.update(SCREEN)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if DIFFICULTY_SELECT_BACK.checkForInput(DIFFICULTY_SELECT_MOUSE_POS):
-                    main_menu()
-        TAIPAN_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(200, 250), 
-                            text_input="TAIPAN", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
-        STEAM_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(200, 400), 
-                            text_input="STEAM", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
-        BULLET_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(200, 550), 
-                            text_input="BULLET", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
-
-        SCREEN.blit(DIFFICULTY_SELECT_TEXT, DIFFICULTY_SELECT_RECT)
-
-        for button in [TAIPAN_BUTTON, STEAM_BUTTON, BULLET_BUTTON]:
-            button.changeColor(DIFFICULTY_SELECT_MOUSE_POS)
-            button.update(SCREEN)
-        
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if TAIPAN_BUTTON.checkForInput(DIFFICULTY_SELECT_MOUSE_POS):
-                    pygame.mixer.music.fadeout(1000)
-                    TaipanGame()
-                if STEAM_BUTTON.checkForInput(DIFFICULTY_SELECT_MOUSE_POS):
-                    pygame.mixer.music.fadeout(1000)
-                    SteamGame()
-                if BULLET_BUTTON.checkForInput(DIFFICULTY_SELECT_MOUSE_POS):
-                    pygame.mixer.music.fadeout(1000)
-                    BulletGame()
-        pygame.display.update()
-def options():
-    while True:
-        OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
-
-        SCREEN.fill("Gray")
-
-        OPTIONS_TEXT = get_font(45).render("Change Volume", True, "Black")
-        OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(400, 100))
-        SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
-
-        OPTIONS_BACK = Button(image=None, pos=(400, 300), 
-                            text_input="BACK", font=get_font(35), base_color="Black", hovering_color="Green")
-
-        OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
-        OPTIONS_BACK.update(SCREEN)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
-                    main_menu()
-
-        pygame.display.update()
 
 
 class BULLET:
@@ -608,11 +527,11 @@ game_score_fontBM = pygame.font.Font('Pixeled.ttf', 44)
 play_again_fontBM = pygame.font.Font('Pixeled.ttf', 30)
 back_button_fontBM = pygame.font.Font('Pixeled.ttf', 23)
 SCREEN_UPDATEBM = pygame.USEREVENT
-pygame.time.set_timer(SCREEN_UPDATEBM, 80)
 
 main_gameBM = MAINBM()
 
 def BulletGame():
+    pygame.time.set_timer(SCREEN_UPDATEBM, 80) 
 
     BulletBGM = pygame.mixer.music.load('BulletMusic.wav')
     pygame.mixer.music.play(-1, 0.0)
@@ -859,11 +778,12 @@ game_score_fontT = pygame.font.Font('Pixeled.ttf', 44)
 play_again_fontT = pygame.font.Font('Pixeled.ttf', 30)
 back_button_fontT = pygame.font.Font('Pixeled.ttf', 23)
 SCREEN_UPDATET = pygame.USEREVENT
-pygame.time.set_timer(SCREEN_UPDATET, 150)
 
 main_gameT = MAIN()
 
 def SteamGame():
+    
+    pygame.time.set_timer(SCREEN_UPDATET, 150) 
 
     SteamBGM = pygame.mixer.music.load('SteamMusic.wav')
     pygame.mixer.music.play(-1, 0.0)
@@ -896,6 +816,94 @@ def SteamGame():
         main_gameT.draw_elementsT()
         pygame.display.update()
         clockT.tick(60)
+
+
+def difficulty_select():
+    Difficulty_music = pygame.mixer.music.load('DifficultySelectMusic.wav')
+    pygame.mixer.music.play(-1, 0.0)
+    pygame.mixer.music.set_volume(0.4)
+
+    Difficulty_image = pygame.image.load('Difficulty.png').convert()
+    screen.blit(Difficulty_image,(0,0))
+    
+    while True:
+        
+        DIFFICULTY_SELECT_MOUSE_POS = pygame.mouse.get_pos()
+
+        #SCREEN.fill("Gray")
+
+        DIFFICULTY_SELECT_TEXT = get_font(45).render("SELECT DIFFICULTY", True, "Black")
+        DIFFICULTY_SELECT_RECT = DIFFICULTY_SELECT_TEXT.get_rect(center=(400, 100))
+        SCREEN.blit(DIFFICULTY_SELECT_TEXT, DIFFICULTY_SELECT_RECT)
+
+        DIFFICULTY_SELECT_BACK = Button(image=None, pos=(400, 750), 
+                            text_input="BACK", font=get_font(35), base_color="Black", hovering_color="Green")
+
+        DIFFICULTY_SELECT_BACK.changeColor(DIFFICULTY_SELECT_MOUSE_POS)
+        DIFFICULTY_SELECT_BACK.update(SCREEN)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if DIFFICULTY_SELECT_BACK.checkForInput(DIFFICULTY_SELECT_MOUSE_POS):
+                    main_menu()
+        TAIPAN_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(200, 250), 
+                            text_input="TAIPAN", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
+        STEAM_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(200, 400), 
+                            text_input="STEAM", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
+        BULLET_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(200, 550), 
+                            text_input="BULLET", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
+
+        SCREEN.blit(DIFFICULTY_SELECT_TEXT, DIFFICULTY_SELECT_RECT)
+
+        for button in [TAIPAN_BUTTON, STEAM_BUTTON, BULLET_BUTTON]:
+            button.changeColor(DIFFICULTY_SELECT_MOUSE_POS)
+            button.update(SCREEN)
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if TAIPAN_BUTTON.checkForInput(DIFFICULTY_SELECT_MOUSE_POS):
+                    pygame.mixer.music.fadeout(1000)
+                    TaipanGame()
+                if STEAM_BUTTON.checkForInput(DIFFICULTY_SELECT_MOUSE_POS):
+                    pygame.mixer.music.fadeout(1000)
+                    SteamGame()
+                if BULLET_BUTTON.checkForInput(DIFFICULTY_SELECT_MOUSE_POS):
+                    pygame.mixer.music.fadeout(1000)
+                    BulletGame()
+        pygame.display.update()
+        
+def options():
+    while True:
+        OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
+
+        SCREEN.fill("Gray")
+
+        OPTIONS_TEXT = get_font(45).render("Change Volume", True, "Black")
+        OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(400, 100))
+        SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
+
+        OPTIONS_BACK = Button(image=None, pos=(400, 300), 
+                            text_input="BACK", font=get_font(35), base_color="Black", hovering_color="Green")
+
+        OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
+        OPTIONS_BACK.update(SCREEN)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
+                    main_menu()
+
+        pygame.display.update()
+
 
 def main_menu():
 
