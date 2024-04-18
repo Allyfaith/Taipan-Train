@@ -8,15 +8,15 @@ to change the game's volume, QUIT closes the Taipan Train application.
 
 Taipan Train has three difficulties to choose from once you click PLAY:
 
-Taipan(Medium)
+Taipan(Medium):
 Taipan is based on a snake called Taipan, a very venomous snake located in Australia. 
 It is also our inspiration for the name of the game. The train model in the game is based on the Pacific Diesel Locomotive.
 
-Titanoboa(Easy)
+Titanoboa(Easy):
 Titanoboa is based on the prehistoric snake called Titanoboa and is said to have been the biggest snake in existence but not very fast compared to its
 overall body size. The train model in the game is based on a Steam Engine Train.
 
-BlackMamba(Hard)
+BlackMamba(Hard):
 BlackMamba is based on the Black Mamba Snake, a very venomous and fast snake found in sub-Saharan Africa. The train model in-game is based 
 on a bullet train, known to be the fastest train type in the world. It can travel across vast lands in the span of a few hours.
 
