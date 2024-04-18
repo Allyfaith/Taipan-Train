@@ -528,7 +528,7 @@ SCREEN_UPDATEBM = pygame.USEREVENT
 main_gameBM = MAINBM()
 
 def BulletGame():
-    pygame.time.set_timer(SCREEN_UPDATEBM, 80) 
+    pygame.time.set_timer(SCREEN_UPDATEBM, 90) 
 
     BulletBGM = pygame.mixer.music.load('BulletMusic.wav')
     pygame.mixer.music.play(-1, 0.0)
@@ -865,13 +865,13 @@ def difficulty_select():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if TAIPAN_BUTTON.checkForInput(DIFFICULTY_SELECT_MOUSE_POS):
-                    pygame.mixer.music.fadeout(1000)
+                    pygame.mixer.music.stop()
                     TaipanGame()
                 if STEAM_BUTTON.checkForInput(DIFFICULTY_SELECT_MOUSE_POS):
-                    pygame.mixer.music.fadeout(1000)
+                    pygame.mixer.music.stop()
                     SteamGame()
                 if BULLET_BUTTON.checkForInput(DIFFICULTY_SELECT_MOUSE_POS):
-                    pygame.mixer.music.fadeout(1000)
+                    pygame.mixer.music.stop()
                     BulletGame()
         pygame.display.update()
         
@@ -935,7 +935,7 @@ def main_menu():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    pygame.mixer.music.fadeout(1000)
+                    pygame.mixer.music.stop()
                     difficulty_select()
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
                     options()
