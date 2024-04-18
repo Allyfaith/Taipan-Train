@@ -849,9 +849,9 @@ def difficulty_select():
         TAIPAN_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(200, 250), 
                             text_input="TAIPAN", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
         STEAM_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(200, 400), 
-                            text_input="STEAM", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
+                            text_input="TITANOBOA", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
         BULLET_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(200, 550), 
-                            text_input="BULLET", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
+                            text_input="BLACKMAMBA", font=get_font(36), base_color="#d7fcd4", hovering_color="White")
 
         SCREEN.blit(DIFFICULTY_SELECT_TEXT, DIFFICULTY_SELECT_RECT)
 
