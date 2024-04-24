@@ -879,7 +879,8 @@ def options():
     while True:
         OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
 
-        SCREEN.fill("Gray")
+        options_image = pygame.image.load('OptionsImage.png').convert()
+        screen.blit(options_image,(0,0))
 
         OPTIONS_TEXT = get_font(45).render("Change Volume", True, "Black")
         OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(400, 100))
