@@ -850,7 +850,7 @@ def options():
         options_image = pygame.image.load('assets/OptionsImage.png').convert()
         screen.blit(options_image,(0,0))
 
-        OPTIONS_TEXT = get_font(45).render("Change Volume", True, "Black")
+        OPTIONS_TEXT = get_font(45).render("Music Volume", True, "Black")
         OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(400, 100))
         SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
 
@@ -859,43 +859,43 @@ def options():
         OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
         OPTIONS_BACK.update(SCREEN)
         VOLUME_1 = Button(image=None, pos=(65, 200), 
-                            text_input="1", font=get_font(35), base_color="Green", hovering_color="Green")
+                            text_input="1", font=get_font(35), base_color="White", hovering_color="Green")
         VOLUME_1.changeColor(OPTIONS_MOUSE_POS)
         VOLUME_1.update(SCREEN)
         VOLUME_2 = Button(image=None, pos=(140, 200), 
-                            text_input="2", font=get_font(35), base_color="Green", hovering_color="Green")
+                            text_input="2", font=get_font(35), base_color="White", hovering_color="Green")
         VOLUME_2.changeColor(OPTIONS_MOUSE_POS)
         VOLUME_2.update(SCREEN)
         VOLUME_3 = Button(image=None, pos=(215, 200), 
-                            text_input="3", font=get_font(35), base_color="Green", hovering_color="Green")
+                            text_input="3", font=get_font(35), base_color="White", hovering_color="Green")
         VOLUME_3.changeColor(OPTIONS_MOUSE_POS)
         VOLUME_3.update(SCREEN)
         VOLUME_4 = Button(image=None, pos=(290, 200), 
-                            text_input="4", font=get_font(35), base_color="Green", hovering_color="Green")
+                            text_input="4", font=get_font(35), base_color="White", hovering_color="Green")
         VOLUME_4.changeColor(OPTIONS_MOUSE_POS)
         VOLUME_4.update(SCREEN)
         VOLUME_5 = Button(image=None, pos=(365, 200), 
-                            text_input="5", font=get_font(35), base_color="Green", hovering_color="Green")
+                            text_input="5", font=get_font(35), base_color="White", hovering_color="Green")
         VOLUME_5.changeColor(OPTIONS_MOUSE_POS)
         VOLUME_5.update(SCREEN)
         VOLUME_6 = Button(image=None, pos=(440, 200), 
-                            text_input="6", font=get_font(35), base_color="Green", hovering_color="Green")
+                            text_input="6", font=get_font(35), base_color="White", hovering_color="Green")
         VOLUME_6.changeColor(OPTIONS_MOUSE_POS)
         VOLUME_6.update(SCREEN)
         VOLUME_7 = Button(image=None, pos=(515, 200), 
-                            text_input="7", font=get_font(35), base_color="Green", hovering_color="Green")
+                            text_input="7", font=get_font(35), base_color="White", hovering_color="Green")
         VOLUME_7.changeColor(OPTIONS_MOUSE_POS)
         VOLUME_7.update(SCREEN)
         VOLUME_8 = Button(image=None, pos=(590, 200), 
-                            text_input="8", font=get_font(35), base_color="Green", hovering_color="Green")
+                            text_input="8", font=get_font(35), base_color="White", hovering_color="Green")
         VOLUME_8.changeColor(OPTIONS_MOUSE_POS)
         VOLUME_8.update(SCREEN)
         VOLUME_9 = Button(image=None, pos=(665, 200), 
-                            text_input="9", font=get_font(35), base_color="Green", hovering_color="Green")
+                            text_input="9", font=get_font(35), base_color="White", hovering_color="Green")
         VOLUME_9.changeColor(OPTIONS_MOUSE_POS)
         VOLUME_9.update(SCREEN)
         VOLUME_10 = Button(image=None, pos=(740, 200), 
-                            text_input="10", font=get_font(35), base_color="Green", hovering_color="Green")
+                            text_input="10", font=get_font(35), base_color="White", hovering_color="Green")
         VOLUME_10.changeColor(OPTIONS_MOUSE_POS)
         VOLUME_10.update(SCREEN)
 
