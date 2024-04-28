@@ -34,6 +34,8 @@ BlackMambaMusic: Robot City by Quincas Moreira
 GameOverMusic: Floating Cat by Michael Grubb
 
 Game Credits:
-Game made by JeetModha and AllyFaith
-Art made By AllyFaith
+
+Developers:JeetModha and AllyFaith
+
+Art: AllyFaith
 
