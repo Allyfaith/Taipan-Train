@@ -35,7 +35,7 @@ GameOverMusic: Floating Cat by Michael Grubb
 
 Game Credits:
 
-Developers:JeetModha and AllyFaith
+Developers: JeetModha and AllyFaith
 
 Art: AllyFaith
 
