@@ -1,9 +1,9 @@
-Taipan Train is a game that is a remixed version of the iconic Snake Game.
+Taipan Train is a remixed version of the iconic Snake Game.
 The player controls the train, which replaces the snake, on train tracks, and the passengers are waiting on the train tracks in their own carts to be collected.
 The game's objective is to collect as many passengers as possible and add them to your train.
 Your score is displayed on the game over screen after you lose.
 
-When you boot up Taipan Train, you can choose from three boxes: PLAY, OPTIONS, and QUIT. PLAY moves you onto the Difficulty Select screen; OPTIONS takes you to the options 
+When you boot up Taipan Train, you can choose from three boxes: PLAY, OPTIONS, and QUIT. PLAY moves you onto the Difficulty Select screen; OPTIONS takes you to the option of adjusting the in-game music volume.
 to change the game's volume, QUIT closes the Taipan Train application.
 
 Taipan Train has three difficulties to choose from once you click PLAY:
