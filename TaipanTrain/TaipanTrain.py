@@ -623,7 +623,7 @@ class PASSENGERT:
         self.yT = random.randint(0, cell_numberT - 1)
         self.posT = Vector2(self.xT, self.yT)
 
-class MAIN:
+class MAINT:
     def __init__(self):
         self.steam = STEAM()
         self.passengerT = PASSENGERT()
@@ -732,7 +732,7 @@ play_again_fontT = pygame.font.Font('assets/Pixeled.ttf', 30)
 back_button_fontT = pygame.font.Font('assets/Pixeled.ttf', 23)
 SCREEN_UPDATET = pygame.USEREVENT
 
-main_gameT = MAIN()
+main_gameT = MAINT()
 
 def SteamGame():
     
